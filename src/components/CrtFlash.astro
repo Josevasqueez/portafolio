@@ -1,0 +1,13 @@
+<div
+  id="crt-flash"
+  style="position:fixed;inset:0;background:var(--color-text);z-index:99999;pointer-events:none;"
+></div>
+<script>
+  (function () {
+    var flash = document.getElementById('crt-flash');
+    if (flash)
+      setTimeout(function () {
+        flash.remove();
+      }, 150);
+  })();
+</script>

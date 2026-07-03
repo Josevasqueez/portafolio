@@ -13,6 +13,10 @@
   --color-badge: rgba(233, 240, 234, 0.1);
 }
 
+::selection {
+  background: var(--color-faint);
+}
+
 body {
   background-color: var(--color-bg);
   color: var(--color-text);

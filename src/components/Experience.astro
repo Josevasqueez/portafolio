@@ -1,0 +1,29 @@
+---
+import SectionHeader from './SectionHeader.astro';
+
+const { experience } = Astro.props;
+---
+
+<section class="mb-10">
+  <SectionHeader icon="briefcase" title="// EXPERIENCIA PROFESIONAL" margin="mb-4" />
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm border-collapse">
+      <thead>
+        <tr class="border-b border-[var(--color-faint)]">
+          <th class="font-title text-[9px] leading-relaxed text-muted text-left pb-2 pr-3 font-normal">Cargo</th>
+          <th class="font-title text-[9px] leading-relaxed text-muted text-left pb-2 pr-3 font-normal">Empresa</th>
+          <th class="font-title text-[9px] leading-relaxed text-muted text-right pb-2 font-normal">Periodo</th>
+        </tr>
+      </thead>
+      <tbody>
+        {experience.map((entry, i) => (
+          <tr class={i < experience.length - 1 ? 'border-b border-[var(--color-faint)]/50 hover:bg-[var(--color-badge)]' : 'hover:bg-[var(--color-badge)]'}>
+            <td class="py-3 pr-3"><span class="text-sm">{entry.role}</span></td>
+            <td class="py-3 pr-3 text-muted">{entry.company}</td>
+            <td class="py-3 text-subtle text-xs text-right">{entry.period}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</section>

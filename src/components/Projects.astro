@@ -1,0 +1,48 @@
+---
+import Icon from './Icon.astro';
+import SectionHeader from './SectionHeader.astro';
+import TagBadge from './TagBadge.astro';
+
+const { projects } = Astro.props;
+---
+
+<section class="mb-12">
+  <SectionHeader icon="folder" title="// PROYECTOS" margin="mb-5" />
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm border-collapse">
+      <thead>
+        <tr class="border-b border-[var(--color-faint)]">
+          <th class="font-title text-[9px] leading-relaxed text-muted text-left pb-2 pr-3 font-normal">Nombre</th>
+          <th class="font-title text-[9px] leading-relaxed text-muted text-left pb-2 pr-3 font-normal">Tags</th>
+          <th class="font-title text-[9px] leading-relaxed text-muted text-right pb-2 font-normal">Url</th>
+        </tr>
+      </thead>
+      <tbody>
+        {projects.map((project, i) => (
+          <tr class={i < projects.length - 1 ? 'border-b border-[var(--color-faint)]/50 hover:bg-[var(--color-badge)]' : 'hover:bg-[var(--color-badge)]'}>
+            <td class="py-3 pr-3 align-top">
+              <span class="text-sm">{project.name}</span>
+            </td>
+            <td class="py-3 pr-3 align-top">
+              <div class="flex flex-wrap gap-1.5">
+                {project.tags.map((tag) => (
+                  <TagBadge tag={tag} />
+                ))}
+              </div>
+            </td>
+            <td class="py-3 align-top text-right">
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-muted hover:text-[var(--color-text)] external-link hover:brightness-150"
+              >
+                <Icon name="external-link" size={16} />
+              </a>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</section>

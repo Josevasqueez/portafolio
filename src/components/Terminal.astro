@@ -1,19 +1,47 @@
-<button id="terminal-toggle" class="fixed bottom-4 right-4 z-50 w-10 h-10 border border-[var(--color-faint)] bg-[var(--color-bg)] text-[var(--color-text)] font-body text-sm cursor-pointer hover:bg-[var(--color-badge)] transition-colors">
+<button
+  id="terminal-toggle"
+  class="fixed bottom-4 right-4 z-50 w-10 h-10 border border-[var(--color-faint)] bg-[var(--color-bg)] text-[var(--color-text)] font-body text-sm cursor-pointer hover:bg-[var(--color-badge)]"
+>
   &gt;_
 </button>
 
-<div id="terminal-overlay" class="fixed inset-0 z-40 hidden items-center justify-center bg-black/70">
-  <div class="w-[640px] max-w-[90vw] h-[400px] max-h-[70vh] border border-[var(--color-faint)] bg-[var(--color-bg)] flex flex-col">
-    <div class="flex items-center justify-between px-3 py-1.5 border-b border-[var(--color-faint)] bg-[var(--color-badge)]">
-      <span class="font-body text-xs text-[var(--color-text)]">terminal — portafolio</span>
-      <button id="terminal-close" class="font-body text-xs text-[var(--color-muted)] hover:text-[var(--color-text)] cursor-pointer">✕</button>
+<div
+  id="terminal-overlay"
+  class="fixed inset-0 z-40 hidden items-center justify-center bg-black/70"
+>
+  <div
+    class="w-[640px] max-w-[90vw] h-[400px] max-h-[70vh] border border-[var(--color-faint)] bg-[var(--color-bg)] flex flex-col"
+  >
+    <div
+      class="flex items-center justify-between px-3 py-1.5 border-b border-[var(--color-faint)] bg-[var(--color-badge)]"
+    >
+      <span class="font-body text-xs text-[var(--color-text)]"
+        >terminal — portafolio</span
+      >
+      <button
+        id="terminal-close"
+        class="font-body text-xs text-[var(--color-muted)] hover:text-[var(--color-text)] cursor-pointer"
+        >✕</button
+      >
     </div>
-    <div id="terminal-output" class="flex-1 overflow-y-auto p-3 font-body text-sm text-[var(--color-text)] space-y-1">
-      <div class="text-[var(--color-muted)]">Bienvenido al terminal de Alejandro. Escribí <span class="text-[var(--color-text)]">help</span> para ver los comandos.</div>
+    <div
+      id="terminal-output"
+      class="flex-1 overflow-y-auto p-3 font-body text-sm text-[var(--color-text)] space-y-1"
+    >
+      <div class="text-[var(--color-muted)]">
+        Bienvenido al terminal de Alejandro. Escribí <span
+          class="text-[var(--color-text)]">help</span
+        > para ver los comandos.
+      </div>
     </div>
-    <div class="flex items-center gap-2 border-t border-[var(--color-faint)] px-3 py-2">
+    <div
+      class="flex items-center gap-2 border-t border-[var(--color-faint)] px-3 py-2"
+    >
       <span class="font-body text-sm text-[var(--color-text)] shrink-0">$</span>
-      <input id="terminal-input" type="text" autofocus
+      <input
+        id="terminal-input"
+        type="text"
+        autofocus
         class="w-full bg-transparent border-none outline-none font-body text-sm text-[var(--color-text)] placeholder:text-[var(--color-subtle)]"
         placeholder="escribí un comando..."
         spellcheck="false"
@@ -33,7 +61,19 @@
   function openTerminal() {
     overlay.classList.remove('hidden');
     overlay.classList.add('flex');
-    setTimeout(() => input.focus(), 100);
+
+    var chars = '!@#$%^&*()_+-=[]{}|;:,.<>?/~`';
+    var noise = '';
+    for (var i = 0; i < 60; i++) {
+      noise += chars[Math.floor(Math.random() * chars.length)];
+    }
+    output.textContent = noise;
+
+    setTimeout(function () {
+      output.innerHTML =
+        '<div class="text-[var(--color-muted)]">Bienvenido al terminal de Alejandro. Escrib\u00ED <span class="text-[var(--color-text)]">help</span> para ver los comandos.</div>';
+      input.focus();
+    }, 200);
   }
 
   function closeTerminal() {
@@ -57,10 +97,12 @@
   sudo      — intentálo si querés
   clear     — limpiá la terminal
   repo      — link al repositorio
-  skills    — tecnologías que uso`,
+  skills    — tecnologías que uso
+  pokemon   — summon a charizard`,
     whoami: 'alejandro',
     ls: `acerca         proyectos      cv             contacto`,
-    date: () => new Date().toLocaleString('es-ES', { timeZone: 'America/Caracas' }),
+    date: () =>
+      new Date().toLocaleString('es-ES', { timeZone: 'America/Caracas' }),
     neofetch: `       _           _           _       _
   ___| |___ _ __ | |__  _ __ (_)_ __ | |_
  / _ \\ / __| '_ \\| '_ \\| '_ \\| | '_ \\| __|
@@ -83,7 +125,9 @@ Shell: bash-like 3.2`,
 > DB:         PostgreSQL
 > Mobile:     React Native
 > Herramientas: Claude, Cursor, OpenCode
-> VCS:        Git, GitHub, Bitbucket`
+> VCS:        Git, GitHub, Bitbucket`,
+    pokemon:
+      '__html__<img src="/charizard.gif" alt="charizard" width="120" height="120" style="image-rendering:pixelated" />',
   };
 
   input.addEventListener('keydown', (e) => {
@@ -101,8 +145,12 @@ Shell: bash-like 3.2`,
     } else if (res !== undefined) {
       const val = typeof res === 'function' ? res() : res;
       const div = document.createElement('div');
-      div.className = 'whitespace-pre-wrap';
-      div.textContent = val;
+      if (typeof val === 'string' && val.startsWith('__html__')) {
+        div.innerHTML = val.slice(7);
+      } else {
+        div.className = 'whitespace-pre-wrap';
+        div.textContent = val;
+      }
       output.appendChild(div);
     } else {
       const div = document.createElement('div');

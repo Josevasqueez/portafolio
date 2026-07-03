@@ -1,0 +1,27 @@
+---
+import SocialLinks from './SocialLinks.astro';
+
+const { author, social } = Astro.props;
+---
+
+<header class="mb-14">
+  <div class="flex items-center gap-5">
+    <img
+      src={author.avatar}
+      alt={author.name}
+      class="w-[100px] h-[100px] object-cover shrink-0 grayscale"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+    <div>
+      <h1 class="font-title text-sm md:text-base leading-relaxed mb-2">
+        {author.name}
+      </h1>
+      <p class="text-muted text-xs md:text-sm mb-4">
+        {author.jobTitle}
+      </p>
+      <SocialLinks social={social} />
+    </div>
+  </div>
+</header>

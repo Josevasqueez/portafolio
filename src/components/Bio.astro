@@ -1,0 +1,21 @@
+---
+import Icon from './Icon.astro';
+import SectionHeader from './SectionHeader.astro';
+
+const { bio, cv } = Astro.props;
+---
+
+<section class="mb-10">
+  <SectionHeader icon="terminal" title="// PERFIL" margin="mb-4" />
+  <p class="text-sm leading-relaxed mb-5">
+    {bio}
+  </p>
+  <a
+    href={cv}
+    download
+    class="inline-flex items-center gap-2 px-3 py-2 text-xs font-title border border-[var(--color-faint)] bg-[var(--color-text)] text-[var(--color-bg)] hover:bg-[var(--color-badge)] hover:text-[var(--color-text)]"
+  >
+    <Icon name="file-text" size={14} />
+    DESCARGAR CV
+  </a>
+</section>

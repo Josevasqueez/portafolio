@@ -1,0 +1,39 @@
+---
+const { site: s } = Astro.props;
+
+const ldJson = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: s.author.name,
+  jobTitle: s.author.jobTitle,
+  url: s.url,
+  image: s.ogImage,
+  sameAs: s.author.sameAs,
+});
+---
+
+<meta charset="utf-8" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/png" href="/favicon.png" />
+<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+<meta name="viewport" content="width=device-width" />
+<meta name="generator" content={Astro.generator} />
+<title>{s.title}</title>
+<meta name="description" content={s.description} />
+<link rel="canonical" href={s.url} />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content={s.title} />
+<meta property="og:description" content={s.description} />
+<meta property="og:image" content={s.ogImage} />
+<meta property="og:url" content={s.url} />
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content={s.title} />
+<meta name="twitter:description" content={s.description} />
+<meta name="twitter:image" content={s.ogImage} />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+<script type="application/ld+json" set:html={ldJson}></script>

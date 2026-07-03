@@ -1,0 +1,18 @@
+---
+import Icon from './Icon.astro';
+
+const { social } = Astro.props;
+---
+
+<div class="flex flex-wrap gap-2">
+  {social.map((link) => (
+    <a
+      href={link.url}
+      target={link.url.startsWith('mailto') ? undefined : '_blank'}
+      rel={link.url.startsWith('mailto') ? undefined : 'noopener noreferrer'}
+      class="inline-flex items-center justify-center border border-[var(--color-faint)] bg-[var(--color-badge)] w-7 h-7 hover:bg-[var(--color-text)] hover:text-[var(--color-bg)]"
+    >
+      <Icon name={link.icon} size={16} />
+    </a>
+  ))}
+</div>

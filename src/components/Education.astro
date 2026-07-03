@@ -1,0 +1,29 @@
+---
+import SectionHeader from './SectionHeader.astro';
+
+const { education } = Astro.props;
+---
+
+<section class="mb-10">
+  <SectionHeader icon="university" title="// FORMACIÓN ACADÉMICA" margin="mb-4" />
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm border-collapse">
+      <thead>
+        <tr class="border-b border-[var(--color-faint)]">
+          <th class="font-title text-[9px] leading-relaxed text-muted text-left pb-2 pr-3 font-normal">Título</th>
+          <th class="font-title text-[9px] leading-relaxed text-muted text-left pb-2 pr-3 font-normal">Institución</th>
+          <th class="font-title text-[9px] leading-relaxed text-muted text-left pb-2 font-normal">Año</th>
+        </tr>
+      </thead>
+      <tbody>
+        {education.map((entry) => (
+          <tr class="hover:bg-[var(--color-badge)]">
+            <td class="py-3 pr-3 text-sm">{entry.degree}</td>
+            <td class="py-3 pr-3 text-muted">{entry.institution}</td>
+            <td class="py-3 text-subtle text-xs">{entry.year}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</section>

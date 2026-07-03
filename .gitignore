@@ -22,3 +22,10 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# agent instructions (internal)
+AGENTS.md
+CLAUDE.md
+
+# personal documents
+docs/
