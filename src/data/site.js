@@ -55,7 +55,7 @@ export const site = {
   projects: [
     {
       name: 'Xinerlink Express',
-      tags: ['Next.js', 'AWS', 'Postgresql'],
+      tags: ['Frontend', 'Microservicios'],
       url: 'https://app.xinerlink.cl/',
     },
     {
