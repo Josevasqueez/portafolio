@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --font-title: "Press Start 2P", system-ui;
+  --font-body: "Share Tech Mono", monospace;
+  --color-bg: #191A1F;
+  --color-text: #E9F0EA;
+  --color-muted: rgba(233, 240, 234, 0.5);
+  --color-subtle: rgba(233, 240, 234, 0.25);
+  --color-faint: rgba(233, 240, 234, 0.12);
+  --color-badge: rgba(233, 240, 234, 0.1);
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  position: relative;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.08) 2px,
+    rgba(0, 0, 0, 0.08) 4px
+  );
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.cursor-blink::after {
+  content: '_';
+  animation: blink 1s step-end infinite;
+}
+
+.external-link {
+  display: flex;
+  justify-content: flex-end;
+}

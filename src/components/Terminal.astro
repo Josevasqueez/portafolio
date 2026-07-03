@@ -1,0 +1,116 @@
+<button id="terminal-toggle" class="fixed bottom-4 right-4 z-50 w-10 h-10 border border-[var(--color-faint)] bg-[var(--color-bg)] text-[var(--color-text)] font-body text-sm cursor-pointer hover:bg-[var(--color-badge)] transition-colors">
+  &gt;_
+</button>
+
+<div id="terminal-overlay" class="fixed inset-0 z-40 hidden items-center justify-center bg-black/70">
+  <div class="w-[640px] max-w-[90vw] h-[400px] max-h-[70vh] border border-[var(--color-faint)] bg-[var(--color-bg)] flex flex-col">
+    <div class="flex items-center justify-between px-3 py-1.5 border-b border-[var(--color-faint)] bg-[var(--color-badge)]">
+      <span class="font-body text-xs text-[var(--color-text)]">terminal — portafolio</span>
+      <button id="terminal-close" class="font-body text-xs text-[var(--color-muted)] hover:text-[var(--color-text)] cursor-pointer">✕</button>
+    </div>
+    <div id="terminal-output" class="flex-1 overflow-y-auto p-3 font-body text-sm text-[var(--color-text)] space-y-1">
+      <div class="text-[var(--color-muted)]">Bienvenido al terminal de Alejandro. Escribí <span class="text-[var(--color-text)]">help</span> para ver los comandos.</div>
+    </div>
+    <div class="flex items-center gap-2 border-t border-[var(--color-faint)] px-3 py-2">
+      <span class="font-body text-sm text-[var(--color-text)] shrink-0">$</span>
+      <input id="terminal-input" type="text" autofocus
+        class="w-full bg-transparent border-none outline-none font-body text-sm text-[var(--color-text)] placeholder:text-[var(--color-subtle)]"
+        placeholder="escribí un comando..."
+        spellcheck="false"
+        autocomplete="off"
+      />
+    </div>
+  </div>
+</div>
+
+<script>
+  const toggle = document.getElementById('terminal-toggle');
+  const overlay = document.getElementById('terminal-overlay');
+  const close = document.getElementById('terminal-close');
+  const input = document.getElementById('terminal-input');
+  const output = document.getElementById('terminal-output');
+
+  function openTerminal() {
+    overlay.classList.remove('hidden');
+    overlay.classList.add('flex');
+    setTimeout(() => input.focus(), 100);
+  }
+
+  function closeTerminal() {
+    overlay.classList.add('hidden');
+    overlay.classList.remove('flex');
+  }
+
+  toggle.addEventListener('click', openTerminal);
+  close.addEventListener('click', closeTerminal);
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeTerminal();
+  });
+
+  const responses = {
+    help: `comandos disponibles:
+  help      — mostrá esta ayuda
+  whoami    — quién soy
+  ls        — secciones del sitio
+  date      — fecha actual
+  neofetch  — info del sistema
+  sudo      — intentálo si querés
+  clear     — limpiá la terminal
+  repo      — link al repositorio
+  skills    — tecnologías que uso`,
+    whoami: 'alejandro',
+    ls: `acerca         proyectos      cv             contacto`,
+    date: () => new Date().toLocaleString('es-ES', { timeZone: 'America/Caracas' }),
+    neofetch: `       _           _           _       _
+  ___| |___ _ __ | |__  _ __ (_)_ __ | |_
+ / _ \\ / __| '_ \\| '_ \\| '_ \\| | '_ \\| __|
+|  __/ \\__ \\ |_) | | | | |_) | | | | | |_
+ \\___|_|___/ .__/|_| |_| .__/|_|_| |_|\\__|
+           |_|         |_|
+------------------------------
+Hostname: portafolio
+Username: alejandro
+OS: JavaScript OS v22
+Kernel: async/await 4.0
+Uptime: 5+ años en producci\u00F3n
+Shell: bash-like 3.2`,
+    sudo: 'nice try. este sistema no necesita sudo.',
+    clear: '__clear__',
+    repo: 'https://github.com/alejandrovasqueez/portafolio',
+    skills: `> Backend:    Node.js, Express, REST APIs
+> Frontend:   React, Next.js, Vite, TanStack
+> Cloud:      AWS (DynamoDB, Lambda), Supabase, Firebase
+> DB:         PostgreSQL
+> Mobile:     React Native
+> Herramientas: Claude, Cursor, OpenCode
+> VCS:        Git, GitHub, Bitbucket`
+  };
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter') return;
+    const cmd = input.value.trim().toLowerCase();
+    input.value = '';
+
+    const line = document.createElement('div');
+    line.innerHTML = `<span class="text-[var(--color-muted)]">$</span> ${cmd}`;
+    output.appendChild(line);
+
+    const res = responses[cmd];
+    if (res === '__clear__') {
+      output.innerHTML = '';
+    } else if (res !== undefined) {
+      const val = typeof res === 'function' ? res() : res;
+      const div = document.createElement('div');
+      div.className = 'whitespace-pre-wrap';
+      div.textContent = val;
+      output.appendChild(div);
+    } else {
+      const div = document.createElement('div');
+      div.textContent = `comando no encontrado: ${cmd}. escribí 'help' para ver los comandos.`;
+      div.className = 'text-[var(--color-subtle)]';
+      output.appendChild(div);
+    }
+
+    output.scrollTop = output.scrollHeight;
+  });
+</script>
